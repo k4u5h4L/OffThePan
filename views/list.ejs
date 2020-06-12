@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!-- Title -->
+        <title>OffThePan | Search results</title>
+
+        <!-- Favicon -->
+        <link rel="icon" href="img/core-img/favicon.ico" />
+
+        <!-- Core Stylesheet -->
+        <link rel="stylesheet" href="style.css" />
+    </head>
+
+    <body>
+        <!-- Preloader -->
+        <%- include("partials/header") %>
+        <!-- ##### Header Area End ##### -->
+
+        <!-- ##### Breadcumb Area Start ##### -->
+        <div
+            class="breadcumb-area bg-img bg-overlay"
+            style="background-image: url(img/bg-img/breadcumb2.jpg);"
+        >
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <div class="breadcumb-text text-center">
+                            <% let searched = query.replace(/%20/g, " "); %>
+                            <h2>Showing results for <b><%= searched %></b></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ##### Breadcumb Area End ##### -->
+
+        <!-- ##### Blog Area Start ##### -->
+        <div class="blog-area section-padding-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="blog-posts-area">
+                            <!-- Single Blog Area -->
+<!-- ######################################################################################################################### -->
+                            <% for (const i in searchData.results) { %>
+                            <% const res = searchData.results[i]; %>
+                            <div class="single-blog-area mb-80">
+                                <!-- Thumbnail -->
+                                <div class="blog-thumbnail">
+                                    <img src="<%= imageUrl + res.image %>" alt="" />
+                                    <!-- Post Date -->
+                                    <!-- <div class="post-date">
+                                        <a href="#"
+                                            ><span>05</span>April <br />
+                                            2018</a
+                                        >
+                                    </div> -->
+                                </div>
+                                <!-- Content -->
+                                <div class="blog-content">
+                                    <a href="<%= res.sourceUrl %>" class="post-title"
+                                        ><%= res.title %></a
+                                    >
+                                    <!-- <div class="meta-data">
+                                        by <a href="#">Maria Williams</a> in <a href="#">Restaurants</a>
+                                    </div> -->
+                                    <p>
+                                        
+                                        <ul>
+                                            <li>Ready in <%= res.readyInMinutes %> minutes</li>
+                                            <li>Servings: <%= res.servings %></li>
+                                        </ul>
+                                    </p>
+                                    <a href="<%= res.sourceUrl %>" class="btn delicious-btn mt-30">Read More</a>
+                                </div>
+                            </div>
+                            <% } %>
+<!-- ######################################################################################################################### -->
+                            
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <!-- ##### Blog Area End ##### -->
+
+        <!-- ##### Footer Area Start ##### -->
+        <%- include("partials/footer") %>
+        <!-- ##### Footer Area Start ##### -->
+
+        <!-- ##### All Javascript Files ##### -->
+        <!-- jQuery-2.2.4 js -->
+        <script src="js/jquery/jquery-2.2.4.min.js"></script>
+        <!-- Popper js -->
+        <script src="js/bootstrap/popper.min.js"></script>
+        <!-- Bootstrap js -->
+        <script src="js/bootstrap/bootstrap.min.js"></script>
+        <!-- All Plugins js -->
+        <script src="js/plugins/plugins.js"></script>
+        <!-- Active js -->
+        <script src="js/active.js"></script>
+    </body>
+</html>
