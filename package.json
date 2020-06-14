@@ -4,6 +4,7 @@
     "description": "A simple web app which finds an appropriate recipe based on ingredients provided.",
     "main": "app.js",
     "scripts": {
+        "start": "node .",
         "devStart": "nodemon ."
     },
     "author": "Kaushal",
@@ -20,6 +21,7 @@
         "nodemailer": "^6.4.6"
     },
     "devDependencies": {
+        "eslint": "^7.2.0",
         "nodemon": "^2.0.3"
     }
 }

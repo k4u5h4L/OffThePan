@@ -1,12 +1,11 @@
-// jshint esversion:8
-
 const express = require("express");
 const bodyParser = require("body-parser");
-// const https = require("https"); // fir api calls using https
+// const https = require("https"); // for api calls using https
 const fetch = require("node-fetch");
 const isValid = require(__dirname + "/validate.js");
-const filter = require(__dirname + "/inputFilter.js");
-const nodeMailer = require("nodemailer");
+// const filter = require(__dirname + "/inputFilter.js");
+const APIfilter = require(__dirname + "/APIfilter.js");
+const nodemailer = require("nodemailer");
 
 require("dotenv").config();
 const PORT = 3000;
@@ -206,10 +205,11 @@ app.post("/featured/:foodTitle", (req, res) => {
 
 app.post("/ingredientSearch", (req, res) => {
     //let ingredients = req.body.ingredients;
-    let ingredients = filter.validate(req.body.ingredients);
+    let ingredients = APIfilter.validate(req.body.ingredients);
 
     ingredientSearch(ingredients).then((data) => {
-        res.render("recipe", { searchData: data });
+        res.render("recipe", { searchData: data, searchQuery: req.body.ingredients });
+        // res.send(data);
     });
 });
 
@@ -223,18 +223,38 @@ app.post("/ingredientSearch", (req, res) => {
 // });
 
 app.post("/cuisineSearch", (req, res) => {
-    const cuisine = req.body.cuisine;
+    let cuisine = {
+        name: APIfilter.validate(req.body.cuisine),
+        diet: req.body.diet,
+        intol: req.body.intol,
+    };
     console.log(cuisine);
 
-    res.send(cuisine);
+    cuisineSearch(cuisine).then((data) => {
+        res.render("recipe-cuisine", { searchData: data, searchQuery: req.body.cuisine });
+        // res.send(data);
+    });
+});
+
+app.post("/nutrientSearch", (req, res) => {
+    //let ingredients = req.body.ingredients;
+    let ingredients = APIfilter.validate(req.body.ingredients);
+
+    nutrientSearch(ingredients).then((data) => {
+        res.render("recipe", { searchData: data });
+        // res.send(data);
+    });
 });
 
 async function ingredientSearch(search) {
-    const apiUrl =
-        "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" +
-        search +
-        "number=5&apiKey=" +
-        process.env.API_KEY;
+    console.log(search);
+    // const apiUrl =
+    //     "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" +
+    //     search +
+    //     "number=5&apiKey=" +
+    //     process.env.API_KEY;
+
+    const apiUrl = "http://www.recipepuppy.com/api/?i=" + search;
 
     let response = await fetch(apiUrl);
     let data = await response.json();
@@ -256,11 +276,15 @@ async function nutrientSearch(search) {
 }
 
 async function cuisineSearch(search) {
-    const apiUrl =
-        "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" +
-        search +
-        "number=5&apiKey=" +
-        process.env.API_KEY;
+    let intolerance = "";
+
+    if (search.intol == "none") {
+        intolerance = "#";
+    }
+
+    // console.log(search);
+
+    const apiUrl = `https://api.spoonacular.com/recipes/search?cuisine=${search.name}&number=10&apiKey=${process.env.API_KEY}&diet=${search.diet}&intolerances=${intolerance}`;
 
     let response = await fetch(apiUrl);
     let data = await response.json();

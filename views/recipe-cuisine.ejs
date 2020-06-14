@@ -75,17 +75,15 @@
             <% let count = 0; %>
             <!-- Start of the loop of recipes -->
             <% for (let i in searchData.results) { %>
+            <!-- image url -->
+            <% let imgUrl = searchData.baseUri + searchData.results[i].image; %>
 
             <!-- Receipe Slider -->
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="receipe-slider owl-carousel">
-                            <img
-                                src="<%= searchData.results[i].thumbnail %>"
-                                style="width: 330px; height: 330px;"
-                                alt="thumbnail"
-                            />
+                            <img src="<%= imgUrl %>" style="width: 400px; height: 400px;" alt="thumbnail" />
                         </div>
                     </div>
                 </div>
@@ -99,11 +97,11 @@
                             <div class="receipe-headline my-5">
                                 <!-- <span>April 05, 2018</span> -->
                                 <h2><%= searchData.results[i].title %></h2>
-                                <!-- <div class="receipe-duration">
-                                    <h6>Prep: 15 mins</h6>
-                                    <h6>Cook: 30 mins</h6>
-                                    <h6>Yields: 8 Servings</h6>
-                                </div> -->
+                                <div class="receipe-duration">
+                                    <h6>Prep: <%= searchData.results[i].readyInMinutes %> mins</h6>
+                                    <!-- <h6>Cook: 30 mins</h6> -->
+                                    <h6>Yields: <%= searchData.results[i].servings %> Servings</h6>
+                                </div>
                             </div>
                         </div>
 
@@ -116,7 +114,7 @@
                                     <i class="fa fa-star" aria-hidden="true"></i>
                                     <i class="fa fa-star-o" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="<%= searchData.results[i].href %>" class="btn delicious-btn"
+                                <a href="<%= searchData.results[i].sourceUrl %>" class="btn delicious-btn"
                                     >Read more</a
                                 >
                             </div>
@@ -166,31 +164,6 @@
                                 </p>
                             </div>
                         </div> -->
-
-                        <!-- Ingredients -->
-                        <div class="col-12 col-lg-4">
-                            <div class="ingredients">
-                                <h4>Ingredients:</h4>
-
-                                <!-- Custom Checkbox -->
-                                <% let ingre = searchData.results[i].ingredients.split(", ") %>
-                                <!-- manipulating array of ingredients -->
-                                <% for (let j in ingre) { %>
-                                <!-- printing array of ingredients -->
-                                <% count++; %>
-                                <div class="custom-control custom-checkbox">
-                                    <input
-                                        type="checkbox"
-                                        class="custom-control-input"
-                                        id="customCheck<%= count %>"
-                                    />
-                                    <label class="custom-control-label" for="customCheck<%= count %>"
-                                        ><%= ingre[j] %></label
-                                    >
-                                </div>
-                                <% } %>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- <div class="row">
