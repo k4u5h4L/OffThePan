@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!-- Title -->
+        <title>OffThePan | Recipe</title>
+
+        <!-- Favicon -->
+        <link rel="icon" href="img/core-img/favicon.ico" />
+
+        <!-- Core Stylesheet -->
+        <link rel="stylesheet" href="style.css" />
+    </head>
+
+    <body>
+        <%- include("partials/header") %>
+
+        <!-- ##### Breadcumb Area Start ##### -->
+        <div
+            class="breadcumb-area bg-img bg-overlay"
+            style="background-image: url(img/bg-img/breadcumb3.jpg);"
+        >
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12">
+                        <div class="breadcumb-text text-center">
+                            <h2>Recipe Search results for <b><%= searchQuery %></b></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ##### Breadcumb Area End ##### -->
+
+        <div class="receipe-post-area section-padding-80">
+            <!-- Receipe Post Search -->
+            <!-- <div class="receipe-post-search mb-80">
+                <div class="container">
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-12 col-lg-3">
+                                <select name="select1" id="select1">
+                                    <option value="1">All Receipies Categories</option>
+                                    <option value="1">All Receipies Categories 2</option>
+                                    <option value="1">All Receipies Categories 3</option>
+                                    <option value="1">All Receipies Categories 4</option>
+                                    <option value="1">All Receipies Categories 5</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <select name="select1" id="select2">
+                                    <option value="1">All Receipies Categories</option>
+                                    <option value="1">All Receipies Categories 2</option>
+                                    <option value="1">All Receipies Categories 3</option>
+                                    <option value="1">All Receipies Categories 4</option>
+                                    <option value="1">All Receipies Categories 5</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <input type="search" name="search" placeholder="Search Receipies" />
+                            </div>
+                            <div class="col-12 col-lg-3 text-right">
+                                <button type="submit" class="btn delicious-btn">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div> -->
+
+            <!-- Receipe Slider -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="receipe-slider owl-carousel">
+                            <img
+                                src="<%= searchData.productMatches[0].imageUrl %>"
+                                style="width: 330px; height: 330px;"
+                                alt="thumbnail"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Receipe Content Area -->
+            <div class="receipe-content-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-8">
+                            <div class="receipe-headline my-5">
+                                <!-- <span>April 05, 2018</span> -->
+                                <h2><%= searchData.productMatches[0].title %></h2>
+                                <!-- <div class="receipe-duration">
+                                    <h6>Prep: 15 mins</h6>
+                                    <h6>Cook: 30 mins</h6>
+                                    <h6>Yields: 8 Servings</h6>
+                                </div> -->
+                                <p>
+                                    <%= searchData.pairingText %>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="receipe-ratings text-right my-5">
+                                <!-- <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div> -->
+                                <a href="<%= searchData.productMatches[0].link %>" class="btn delicious-btn"
+                                    >Buy</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <h5 style="opacity: 0.75;">About the Wine</h5>
+                            <div class="single-preparation-step d-flex">
+                                
+                                <p>
+                                    <%= searchData.productMatches[0].description %>
+                                </p>
+                                
+                                
+                            </div>
+
+                            <div class="single-preparation-step d-flex"><h6>Price: <%= searchData.productMatches[0].price %></h6></div>
+                            <div class="single-preparation-step d-flex"><h6>Rating: <%= searchData.productMatches[0].averageRating * 5 %></h6></div>
+
+                            <h2>Other recommended wine(s): </h2>
+                            <% for (let j in searchData.pairedWines) { %>
+                            <div class="single-preparation-step d-flex">      
+                                    <h4>0<%= parseInt(j) + 1 %>.</h4>
+                                    <h6 style="opacity: 0.75;"><%= searchData.pairedWines[j] %></h6>  
+                            </div>
+                            <% } %>
+                        </div>
+
+                        
+
+                    <!-- <div class="row">
+                        <div class="col-12">
+                            <div class="section-heading text-left">
+                                <h1><a href="#">Read more</a></h1>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- ##### Footer Area Start ##### -->
+        <%- include("partials/footer") %>
+        <!-- ##### Footer Area Start ##### -->
+
+        <!-- ##### All Javascript Files ##### -->
+        <!-- jQuery-2.2.4 js -->
+        <script src="js/jquery/jquery-2.2.4.min.js"></script>
+        <!-- Popper js -->
+        <script src="js/bootstrap/popper.min.js"></script>
+        <!-- Bootstrap js -->
+        <script src="js/bootstrap/bootstrap.min.js"></script>
+        <!-- All Plugins js -->
+        <script src="js/plugins/plugins.js"></script>
+        <!-- Active js -->
+        <script src="js/active.js"></script>
+    </body>
+</html>

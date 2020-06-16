@@ -96,7 +96,7 @@
                                     role="tab"
                                     aria-controls="tab3"
                                     aria-selected="true"
-                                    >Search by Nutrients</a
+                                    >Search Wine</a
                                 >
                             </li>
                         </ul>
@@ -187,7 +187,7 @@
                                                                         <option value="shellfish">Shellfish</option>
                                                                         <option value="soy">Soy</option>
                                                                         <option value="sulfite">Sulfite</option>
-                                                                        <option value="wheat">Wheat</option>
+                                                                        <option value="wheat">Wheat</option>    
                                                                         
                                                                     </select>
                                                                 </div>
@@ -347,12 +347,40 @@
                                 <div class="delicious-tab-content">
                                     <!-- Tab Text -->
                                     <div class="delicious-tab-text">
-                                        <p>
-                                            Integer nec bibendum lacus. Praesent malesuada congue, Suspendisse
-                                            dictum enim sit amet libero malesu ada feugiat. Praesent malesuada
-                                            congue magna at finibus. In hac habitasse platea dictumst.
-                                            Curabitur rhoncus auctor eleifend. Praesent malesuada congue.
-                                        </p>
+                                        <!--#################-->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="contact-form-area">
+                                                    <form action="/wineSearch" method="post">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <p>
+                                                                    Enter the name of the food below to get the corresponding 
+                                                                    wine recommendation.
+                                                                </p>
+                                                                <input
+                                                                        type="text"
+                                                                        class="form-control"
+                                                                        id="wineInput"
+                                                                        name="wineInput"
+                                                                        placeholder="What would you like to have?"
+                                                                    />
+                                                            </div>
+
+                                                            <div class="col-12 text-center">
+                                                                <button
+                                                                    class="btn delicious-btn mt-30"
+                                                                    type="submit"
+                                                                >
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--#################-->
                                     </div>
                                 </div>
                             </div>

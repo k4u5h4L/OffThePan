@@ -5,10 +5,12 @@ const fetch = require("node-fetch");
 const isValid = require(__dirname + "/validate.js");
 // const filter = require(__dirname + "/inputFilter.js");
 const APIfilter = require(__dirname + "/APIfilter.js");
+const quotes = require(__dirname + "/APIdata/quotes.json");
 const nodemailer = require("nodemailer");
 
 require("dotenv").config();
 const PORT = 3000;
+const APIKey = process.env.API_KEY;
 
 const app = express();
 
@@ -17,33 +19,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-    quoteSearch().then((data) => {
-        // console.log(data);
-        if (data.length == 0) {
-            const backup = {
-                text: "All you need is love. But a little chocolate now and then doesn't hurt.",
-                author: "Charles M. Schulz",
-            };
-            res.render("index", { data: backup });
-        } else {
-            const numberOfQuotes = data.length - 1;
-            const rand = Math.floor(Math.random() * numberOfQuotes); // generating a random number
-            const quoteData = data[rand];
+// console.log(quotes[0]);
 
-            res.render("index", { data: quoteData });
-        }
-    });
+app.get("/", (req, res) => {
+    // console.log(data);
+    if (quotes.length == 0) {
+        const backup = {
+            text: "All you need is love. But a little chocolate now and then doesn't hurt.",
+            author: "Charles M. Schulz",
+        };
+        res.render("index", { data: backup });
+    } else {
+        const numberOfQuotes = quotes.length - 1;
+        const rand = Math.floor(Math.random() * numberOfQuotes); // generating a random number
+        const quoteData = quotes[rand];
+
+        res.render("index", { data: quoteData });
+    }
 });
 
-async function quoteSearch() {
-    const apiUrl = "https://type.fit/api/quotes/";
+// async function quoteSearch() {
+//     const apiUrl = "https://type.fit/api/quotes/";
 
-    let response = await fetch(apiUrl);
-    let data = await response.json();
+//     let response = await fetch(apiUrl);
+//     let data = await response.json();
 
-    return data;
-}
+//     return data;
+// }
 
 app.get("/about", (req, res) => {
     res.render("about");
@@ -148,11 +150,7 @@ app.post("/quickSearch", (req, res) => {
 });
 
 async function quickSearchData(search) {
-    const apiUrl =
-        "https://api.spoonacular.com/recipes/search?query=" +
-        search +
-        "&number=5&apiKey=" +
-        process.env.API_KEY;
+    const apiUrl = `https://api.spoonacular.com/recipes/search?query=${search}&number=5&apiKey=${APIKey}`;
 
     let response = await fetch(apiUrl);
     let data = await response.json();
@@ -161,8 +159,7 @@ async function quickSearchData(search) {
 }
 
 async function vegetarianSearch() {
-    const apiUrl =
-        "https://api.spoonacular.com/recipes/search?number=5&diet=vegetarian&apiKey=" + process.env.API_KEY;
+    const apiUrl = `https://api.spoonacular.com/recipes/search?number=5&diet=vegetarian&apiKey=${APIKey}`;
 
     let response = await fetch(apiUrl);
     let data = await response.json();
@@ -236,13 +233,19 @@ app.post("/cuisineSearch", (req, res) => {
     });
 });
 
-app.post("/nutrientSearch", (req, res) => {
+app.post("/wineSearch", (req, res) => {
     //let ingredients = req.body.ingredients;
-    let ingredients = APIfilter.validate(req.body.ingredients);
+    let ingredients = APIfilter.validate(req.body.wineInput);
 
-    nutrientSearch(ingredients).then((data) => {
-        res.render("recipe", { searchData: data });
-        // res.send(data);
+    wineSearch(ingredients).then((data) => {
+        // console.log(data);
+
+        res.render("wine", {
+            searchData: data,
+            searchQuery: "Wine with " + req.body.wineInput,
+        });
+
+        //res.send(data);
     });
 });
 
@@ -252,9 +255,9 @@ async function ingredientSearch(search) {
     //     "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" +
     //     search +
     //     "number=5&apiKey=" +
-    //     process.env.API_KEY;
+    //     APIKey;
 
-    const apiUrl = "http://www.recipepuppy.com/api/?i=" + search;
+    const apiUrl = `http://www.recipepuppy.com/api/?i=${search}`;
 
     let response = await fetch(apiUrl);
     let data = await response.json();
@@ -262,12 +265,8 @@ async function ingredientSearch(search) {
     return data;
 }
 
-async function nutrientSearch(search) {
-    const apiUrl =
-        "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" +
-        search +
-        "number=5&apiKey=" +
-        process.env.API_KEY;
+async function wineSearch(search) {
+    const apiUrl = `https://api.spoonacular.com/food/wine/pairing?food=${search}&apiKey=${APIKey}`;
 
     let response = await fetch(apiUrl);
     let data = await response.json();
@@ -277,14 +276,17 @@ async function nutrientSearch(search) {
 
 async function cuisineSearch(search) {
     let intolerance = "";
+    let apiUrl = "";
 
     if (search.intol == "none") {
         intolerance = "#";
     }
 
-    // console.log(search);
-
-    const apiUrl = `https://api.spoonacular.com/recipes/search?cuisine=${search.name}&number=10&apiKey=${process.env.API_KEY}&diet=${search.diet}&intolerances=${intolerance}`;
+    if (search.diet == "whole30") {
+        apiUrl = `https://api.spoonacular.com/recipes/search?cuisine=${search.name}&number=10&apiKey=${APIKey}&intolerances=${intolerance}`;
+    } else {
+        apiUrl = `https://api.spoonacular.com/recipes/search?cuisine=${search.name}&number=10&apiKey=${APIKey}&diet=${search.diet}&intolerances=${intolerance}`;
+    }
 
     let response = await fetch(apiUrl);
     let data = await response.json();
@@ -296,13 +298,4 @@ app.get("*", (req, res) => {
     res.render("failure", { data: "This page is not available!" });
 });
 
-app.listen(PORT, () => console.log("Server is running on port " + PORT));
-
-// const Tesseract = require('tesseract.js');
-// Tesseract.recognize(
-//     'https://tesseract.projectnaptha.com/img/eng_bw.png',
-//     'eng',
-//     { logger: m => console.log(m) }
-// ).then(({ data: { text } }) => {
-//     console.log(text);
-// });
+app.listen(process.env.PORT || PORT, () => console.log(`Server is running on port ${PORT}`));
