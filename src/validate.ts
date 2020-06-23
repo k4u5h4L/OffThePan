@@ -1,6 +1,6 @@
 // jshint esversion:8
 
-exports.validate = (text) => {
+const validate = (text: string) => {
     // const pattern = /^[A-Za-z]+/gim;
     console.log(text);
 
@@ -14,3 +14,5 @@ exports.validate = (text) => {
         return false;
     }
 };
+
+export default validate;

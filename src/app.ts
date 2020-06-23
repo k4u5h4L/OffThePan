@@ -1,20 +1,22 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-// const https = require("https"); // for api calls using https
-const fetch = require("node-fetch");
-const isValid = require(__dirname + "/validate.js");
-// const filter = require(__dirname + "/inputFilter.js");
-const APIfilter = require(__dirname + "/APIfilter.js");
-const quotes = require(__dirname + "/APIdata/quotes.json");
-const nodemailer = require("nodemailer");
+import express from "express";
+import bodyParser from "body-parser";
+// import https from "https"; // for api calls using https
+import fetch from "node-fetch";
+import isValid from "./validate";
+// import filter from "./inputFilter";
+import APIfilter from "./APIfilter";
+import quotes from "./APIdata/quotes";
+import nodemailer from "nodemailer";
 
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
+
 const PORT = 3000;
 const APIKey = process.env.API_KEY;
 
 const app = express();
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
@@ -97,7 +99,7 @@ app.post("/quickSearch", (req, res) => {
     let search = req.body.searchItem.trim();
     const initialUrl = "https://spoonacular.com/recipeImages/";
 
-    const tempVal = isValid.validate(search);
+    const tempVal = isValid(search);
 
     if (!tempVal) {
         console.log("The input has more than a single word and/or contains symbols.");
@@ -149,7 +151,7 @@ app.post("/quickSearch", (req, res) => {
     // });
 });
 
-async function quickSearchData(search) {
+async function quickSearchData(search: string) {
     const apiUrl = `https://api.spoonacular.com/recipes/search?query=${search}&number=5&apiKey=${APIKey}`;
 
     let response = await fetch(apiUrl);
@@ -202,7 +204,7 @@ app.post("/featured/:foodTitle", (req, res) => {
 
 app.post("/ingredientSearch", (req, res) => {
     //let ingredients = req.body.ingredients;
-    let ingredients = APIfilter.validate(req.body.ingredients);
+    let ingredients = APIfilter(req.body.ingredients);
 
     ingredientSearch(ingredients).then((data) => {
         res.render("recipe", { searchData: data, searchQuery: req.body.ingredients });
@@ -221,7 +223,7 @@ app.post("/ingredientSearch", (req, res) => {
 
 app.post("/cuisineSearch", (req, res) => {
     let cuisine = {
-        name: APIfilter.validate(req.body.cuisine),
+        name: APIfilter(req.body.cuisine),
         diet: req.body.diet,
         intol: req.body.intol,
     };
@@ -235,7 +237,7 @@ app.post("/cuisineSearch", (req, res) => {
 
 app.post("/wineSearch", (req, res) => {
     //let ingredients = req.body.ingredients;
-    let ingredients = APIfilter.validate(req.body.wineInput);
+    let ingredients = APIfilter(req.body.wineInput);
 
     wineSearch(ingredients).then((data) => {
         // console.log(data);
@@ -249,7 +251,7 @@ app.post("/wineSearch", (req, res) => {
     });
 });
 
-async function ingredientSearch(search) {
+async function ingredientSearch(search: string) {
     console.log(search);
     // const apiUrl =
     //     "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" +
@@ -265,7 +267,7 @@ async function ingredientSearch(search) {
     return data;
 }
 
-async function wineSearch(search) {
+async function wineSearch(search: string) {
     const apiUrl = `https://api.spoonacular.com/food/wine/pairing?food=${search}&apiKey=${APIKey}`;
 
     let response = await fetch(apiUrl);
@@ -274,7 +276,7 @@ async function wineSearch(search) {
     return data;
 }
 
-async function cuisineSearch(search) {
+async function cuisineSearch(search: any) {
     let intolerance = "";
     let apiUrl = "";
 

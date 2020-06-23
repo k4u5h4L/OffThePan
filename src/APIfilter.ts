@@ -1,9 +1,11 @@
 // jshint esversion:8
 
-exports.validate = (text) => {
+const validate = (text: string) => {
     text = text.replace(/, /g, ",");
 
     text = text.replace(/and/g, ",");
 
     return text;
 };
+
+export default validate;
