@@ -1,4 +1,6 @@
-import express from "express";
+// main app
+
+import express, { Application, Request, Response } from "express";
 import bodyParser from "body-parser";
 // import https from "https"; // for api calls using https
 import fetch from "node-fetch";
@@ -14,7 +16,7 @@ dotenv.config();
 const PORT = 3000;
 const APIKey = process.env.API_KEY;
 
-const app = express();
+const app: Application = express();
 
 app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,7 +25,7 @@ app.set("view engine", "ejs");
 
 // console.log(quotes[0]);
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
     // console.log(data);
     if (quotes.length == 0) {
         const backup = {
@@ -49,15 +51,15 @@ app.get("/", (req, res) => {
 //     return data;
 // }
 
-app.get("/about", (req, res) => {
+app.get("/about", (req: Request, res: Response) => {
     res.render("about");
 });
 
 app.route("/contact")
-    .get((req, res) => {
+    .get((req: Request, res: Response) => {
         res.render("contact");
     })
-    .post((req, res) => {
+    .post((req: Request, res: Response) => {
         const contactInfo = {
             name: req.body.name,
             email: req.body.contactEmail,
@@ -91,11 +93,11 @@ app.route("/contact")
         res.render("thankyou", { data: contactInfo.name });
     });
 
-app.get("/test", (req, res) => {
+app.get("/test", (req: Request, res: Response) => {
     res.render("reference");
 });
 
-app.post("/quickSearch", (req, res) => {
+app.post("/quickSearch", (req: Request, res: Response) => {
     let search = req.body.searchItem.trim();
     const initialUrl = "https://spoonacular.com/recipeImages/";
 
@@ -169,11 +171,11 @@ async function vegetarianSearch() {
     return data;
 }
 
-app.get("/search", (req, res) => {
+app.get("/search", (req: Request, res: Response) => {
     res.render("search");
 });
 
-app.get("/vegetarian", (req, res) => {
+app.get("/vegetarian", (req: Request, res: Response) => {
     vegetarianSearch().then((data) => {
         // console.log(data);
         const initialUrl = "https://spoonacular.com/recipeImages/";
@@ -185,7 +187,7 @@ app.get("/vegetarian", (req, res) => {
     });
 });
 
-app.post("/featured/:foodTitle", (req, res) => {
+app.post("/featured/:foodTitle", (req: Request, res: Response) => {
     const searchTitle = req.params.foodTitle;
     // if (searchTitle == "burger" || searchTitle == "salads" || searchTitle == "desserts") {
     quickSearchData(searchTitle).then((data) => {
@@ -202,7 +204,7 @@ app.post("/featured/:foodTitle", (req, res) => {
     // }
 });
 
-app.post("/ingredientSearch", (req, res) => {
+app.post("/ingredientSearch", (req: Request, res: Response) => {
     //let ingredients = req.body.ingredients;
     let ingredients = APIfilter(req.body.ingredients);
 
@@ -212,7 +214,7 @@ app.post("/ingredientSearch", (req, res) => {
     });
 });
 
-// app.post("/nutrientSearch", (req, res) => {
+// app.post("/nutrientSearch", (req: Request, res: Response) => {
 //     //let ingredients = req.body.ingredients;
 //     let ingredients = filter.validate(req.body.ingredients);
 
@@ -221,7 +223,7 @@ app.post("/ingredientSearch", (req, res) => {
 //     });
 // });
 
-app.post("/cuisineSearch", (req, res) => {
+app.post("/cuisineSearch", (req: Request, res: Response) => {
     let cuisine = {
         name: APIfilter(req.body.cuisine),
         diet: req.body.diet,
@@ -235,7 +237,7 @@ app.post("/cuisineSearch", (req, res) => {
     });
 });
 
-app.post("/wineSearch", (req, res) => {
+app.post("/wineSearch", (req: Request, res: Response) => {
     //let ingredients = req.body.ingredients;
     let ingredients = APIfilter(req.body.wineInput);
 
@@ -296,7 +298,7 @@ async function cuisineSearch(search: any) {
     return data;
 }
 
-app.get("*", (req, res) => {
+app.get("*", (req: Request, res: Response) => {
     res.render("failure", { data: "This page is not available!" });
 });
 
