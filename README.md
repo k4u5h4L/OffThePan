@@ -1,7 +1,7 @@
 <h1 align="center">OffThePan</h1></br>
 
 <p align="center">
-:eyeglasses: A web app which recommends recipes based on the ingredients provided.
+:poultry_leg: A web app which recommends recipes based on the ingredients provided. :hamburger:
 </p>
 <br>
 
