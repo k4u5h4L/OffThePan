@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="#"><img alt="TypeScript Language Badge" src="https://badgen.net/badge/icon/typescript?icon=typescript&label"/></a>
-  <a href="#"><img alt="chrome Badge" src="https://badgen.net/badge/runs-on/icon/chrome?icon=chrome&label"/></a>
+  <a href="#"><img alt="chrome Badge" src="https://badgen.net/badge/icon/chrome?icon=chrome&label"/></a>
   <a href="https://github.com/k4u5h4L"><img alt="k4u5h4L GitHub badge" src="https://badgen.net/badge/GitHub/k4u5h4L?icon=github&color=24292e"/></a>
 </p>
 
