@@ -1,10 +1,20 @@
-# OffThePan
+<h1 align="center">OffThePan</h1></br>
 
-![OffThePan Logo](/assets/logo.png)
+<p align="center">
+:eyeglasses: A web app which recommends recipes based on the ingredients provided.
+</p>
+<br>
 
-A web app which recommends recipes based on the ingredients provided.
+<p align="center">
+  <a href="#"><img alt="TypeScript Language Badge" src="https://badgen.net/badge/language/typescript?icon=typescript&label"/></a>
+  <a href="#"><img alt="npm Badge" src="https://badgen.net/badge/icon/npm?icon=npm&label"/></a>
+  <a href="https://github.com/k4u5h4L"><img alt="k4u5h4L GitHub badge" src="https://badgen.net/badge/GitHub/k4u5h4L?icon=github&color=24292e"/></a>
+</p>
 
-> Made using technologies such as Node.js, MongoDB, Express, ejs, TypeScript and JavaScript.
+<br>
+<p align="center">
+<img width="320px" src="assets/logo.png" alt="offthepan logo"></img>
+</p><br>
 
 ## Features:
 
