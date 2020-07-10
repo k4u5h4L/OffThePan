@@ -1,8 +1,10 @@
 # OffThePan
 
+![OffThePan Logo](/assets/logo.png)
+
 A web app which recommends recipes based on the ingredients provided.
 
-Made using technologies such as Node.js, MongoDB, Express, ejs, TypeScript and JavaScript.
+> Made using technologies such as Node.js, MongoDB, Express, ejs, TypeScript and JavaScript.
 
 ## Features:
 
