@@ -1,36 +1,36 @@
 {
-    "name": "offthepan",
-    "version": "1.0.0",
-    "description": "A simple web app which finds an appropriate recipe based on ingredients provided.",
-    "main": "app.js",
-    "scripts": {
-        "start": "node dist/app.js",
-        "dev": "nodemon src/app.ts",
-        "build": "tsc -p ."
-    },
-    "author": "Kaushal",
-    "license": "ISC",
-    "engines": {
-        "node": "14.2.0"
-    },
-    "dependencies": {
-        "body-parser": "^1.19.0",
-        "dotenv": "^8.2.0",
-        "ejs": "^3.1.2",
-        "express": "^4.17.1",
-        "node-fetch": "^2.6.0",
-        "nodemailer": "^6.4.6"
-    },
-    "devDependencies": {
-        "@types/express": "^4.17.6",
-        "@types/node": "^14.0.13",
-        "@types/node-fetch": "^2.5.7",
-        "@types/nodemailer": "^6.4.0",
-        "@typescript-eslint/eslint-plugin": "^3.4.0",
-        "@typescript-eslint/parser": "^3.4.0",
-        "eslint": "^7.2.0",
-        "nodemon": "^2.0.3",
-        "ts-node": "^8.10.2",
-        "typescript": "^3.9.5"
-    }
+  "name": "offthepan",
+  "version": "1.0.0",
+  "description": "A simple web app which finds an appropriate recipe based on ingredients provided.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon src/app.ts",
+    "build": "tsc -p ."
+  },
+  "author": "Kaushal",
+  "license": "ISC",
+  "engines": {
+    "node": "12.x"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "nodemailer": "^6.4.6"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^14.0.13",
+    "@types/node-fetch": "^2.5.7",
+    "@types/nodemailer": "^6.4.0",
+    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/parser": "^3.4.0",
+    "eslint": "^7.2.0",
+    "nodemon": "^2.0.3",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
 }
