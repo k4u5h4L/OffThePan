@@ -4,6 +4,8 @@ import express, { Application, Request, Response } from "express";
 import bodyParser from "body-parser";
 // import https from "https"; // for api calls using https
 import fetch from "node-fetch";
+import mongoose, { mongo } from "mongoose";
+
 import isValid from "./validate";
 // import filter from "./inputFilter";
 import APIfilter from "./APIfilter";
@@ -22,6 +24,23 @@ app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
+
+const DBName = `offthepanDB`;
+
+mongoose.connect(`mongodb://localhost:27017/${DBName}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+mongoose.set("useCreateIndex", true);
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  subject: String,
+  message: String,
+});
+
+const Contact = mongoose.model("Contact", userSchema);
 
 // console.log(quotes[0]);
 
@@ -74,6 +93,16 @@ app
       message: req.body.message,
     };
 
+    const user = new Contact({
+      name: req.body.name,
+      email: req.body.contactEmail,
+      subject: req.body.subject,
+      message: req.body.message,
+    });
+
+    user.save();
+
+    /*
     const transport = nodemailer.createTransport({
       host: "smtp.mailtrap.io",
       port: 2525,
@@ -97,6 +126,7 @@ app
         console.log(info);
       }
     });
+    */
 
     res.render("thankyou", { data: contactInfo.name });
   });
