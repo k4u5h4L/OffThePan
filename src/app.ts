@@ -2,7 +2,6 @@
 
 import express, { Application, Request, Response } from "express";
 import bodyParser from "body-parser";
-// import https from "https"; // for api calls using https
 import fetch from "node-fetch";
 import mongoose, { mongo } from "mongoose";
 
@@ -154,32 +153,6 @@ app.post("/quickSearch", (req: Request, res: Response) => {
 
   search = search.replace(/\s/g, "%20");
   console.log(search);
-
-  // if you're using https module for api calls instead of fetch()
-
-  // https.get(apiUrl, (response) => {
-  //     console.log(response.statusMessage);
-
-  //     if (response.statusCode != 200) {
-  //         res.render("failure", { data: "We could not find anything what you searched for." });
-  //         return false;
-  //     }
-
-  //     response.on("data", (data) => {
-  //         try {
-  //             console.log(JSON.parse(data));
-  //         } catch (e) {
-  //             console.log("The file wasn't in a valid JSON format.");
-
-  //             res.render("failure", { data: "Sorry. Something went wrong on our end!" });
-  //             return false;
-  //         }
-
-  //         const searchData = JSON.parse(data);
-  //         const image = searchData.results[0].image;
-
-  //         // const imageUrl = initialUrl + searchData.results[0].id + "-636x393.jpg"; // use this if the other doesn't work
-  //         const imageUrl = initialUrl + image;
 
   quickSearchData(search).then((data) => {
     // console.log(data);
